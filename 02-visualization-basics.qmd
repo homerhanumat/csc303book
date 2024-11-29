@@ -1,0 +1,208 @@
+---
+title: "Data Visualization"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,
+                      fig.align = "center")
+data("m111survey", package = "tigerstats")
+data("SwimRecords", package = "mosaicData")
+data("RailTrail", package = "mosaicData")
+data("ZipGeography", package = "DataComputing")
+library(ggplot2)
+library(dplyr)
+library(gganimate)
+library(gapminder)
+```
+
+
+```{r echo=FALSE, fig.align="center", out.width="90%", fig.cap="Data Science:  the Big Picture"}
+knitr::include_graphics("images/data_flow.png")
+```
+
+## A Taxonomy for Data Graphics
+
+
+A taxonomy is a *scheme of classification*.
+
+We'll introduce a taxonomy that helps you understand and critique data visualizations.
+
+The four basic elements of our taxonomy of graphics are as follows:
+
+* visual cues
+* coordinate system
+* scale
+* context
+
+
+Visual cues are graphical elements that draw the viewer's eye to what you him/her to focus on.
+
+* position (numerical)
+* length (numerical)
+* angle (numerical)
+* direction (numerical)
+* shape (categorical)
+* area (numerical)
+* volume (numerical)
+* shade (either)
+* color (either)
+
+The coordinate system determines how data points are organized visually.
+
+* Cartesian (familiar x-y plane)
+* polar (items identified by angle and distance from origin point)
+* geographic (locations on the earth in 2d representation)
+
+## Introductory Examples
+
+An example:
+
+```{r ggfastestgpasex, cache=TRUE, echo=FALSE, fig.cap="Scatterplot of fastest driving speed and GPA.  Points are colored by sex of the student."}
+ggplot(m111survey, aes(x = fastest, y = GPA)) +
+  geom_point(aes(color = sex)) +
+  labs(x = 'Fastest Speed Ever Driven (mph)',
+       y = 'Grade-Point Average',
+       title = "No strong relationship here between speed and GPA.")
+```
+
+Another example:
+
+```{r, cache = TRUE, fig.cap="Classroom seating preferences of 71 Georgetown students."}
+res <- as.vector(table(m111survey$seat))
+pref <- c("front", "middle", "back")
+df <- data.frame(group = factor(pref, levels = pref),
+                 size = res,
+                 stringsAsFactors = FALSE)
+bp <- ggplot(df, aes(x ="", y = size)) +
+  geom_bar(width = 1, stat = "identity", aes(fill = group)) +
+  coord_polar("y", start=0) +
+  scale_fill_brewer(palette="Dark2") +
+  labs(x = "", y = "")
+bp
+```
+
+Another example:
+
+```{r ggchoropleth, cache=TRUE, echo=FALSE, fig.cap="Choropleth map of state populations in the U.S.", cache = TRUE}
+ZipGeography %>%
+  select(State, Population) %>%
+  stats::na.omit() %>%
+  filter(State != "") %>%
+  group_by(State) %>%
+  summarise(population = sum(Population)) %>%
+  DataComputing::USMap(key = State, fill = population)
+```
+
+## Scales and Context
+
+### Scales
+
+Scales translate data values into visual cues.
+
+* Common scales for numerical variables:
+    * linear
+    * logarithmic
+    * percentage
+* Common scales for categorical variables:
+    * no ordering (e.g., Democrat, Republican, Independent)
+    * ordinal (e.g., hate sports, don't care, love sports)
+* The variable *time* can be scaled in many ways
+
+
+
+### Context
+
+Purpose:
+
+* explain purpose and major points of the graph
+* help reader translate back from visual cues to data values
+
+Examples:
+
+* title
+* subtitle
+* caption
+* axis labels
+* tick marks, grid lines
+* legends
+
+An example:
+
+```{r swimrecords, cache=TRUE, echo=FALSE, fig.cap="100-meter freestyle world records times from 1905 to 2004.", cache = TRUE}
+ggplot(SwimRecords, aes(x = year, y = time)) +
+  geom_line(aes(color = sex)) +
+  geom_point(aes(shape = sex)) +
+  labs(x = "Year", y = "time (seconds)")
+```
+
+## Other Considerations
+
+### Squeezing in the Data
+
+Some devices for fitting a lot of data into two dimensions:
+
+* multiples (facets)
+* layering
+* animation
+
+### Multiples
+
+This is known as facetting.
+
+* Break down the data by one or more variables.
+* Make a different plot for each combination of the chosen variable(s).
+
+An example:
+
+```{r impfacetgrid2, cache=TRUE, fig.cap = "Daily traffic on a foot trail, facetted by season. Each point is a day of the year."}
+n <- nrow(RailTrail)
+season <- character(n)
+for ( i in 1:n ) {
+  if ( RailTrail$spring[i] ) {
+    season[i] <- "spring"
+  } else if ( RailTrail$summer[i] ) {
+    season[i] <- "summer"
+  } else if ( RailTrail$fall[i] ) {
+    season[i] <- "fall"
+  }
+}
+RailTrail$season <- factor(season,
+                           levels = c("spring", "summer", "fall"))
+ggplot(RailTrail, aes(x = dayType, y = volume)) +
+  geom_jitter(aes(color = dayType)) +
+  facet_grid( . ~ season) +
+  labs(x = "Type of Day in the Week",
+       y = "number of visitors") +
+  theme(legend.position = "top", legend.direction = "horizontal")
+```
+
+### Layering
+
+Usually this involves representing the data values in more than one way.
+
+An example:
+
+```{r impviolinfastestseat, cache=TRUE, echo=FALSE, fig.cap="Violin and jitter-plot of the fastest speed ever driven, by seating preference."}
+ggplot(m111survey, aes(x = seat, y = fastest)) + 
+  geom_violin(fill = "burlywood") +
+  geom_jitter(width = 0.2) +
+  labs(x = "Seating preference",
+       y = "Fastest speed ever driven (mph)",
+             title = "There aren't so many back-sitters.")
+```
+
+
+### More Complex Graphs
+
+We'll try a few here:
+
+http://mdsr-book.github.io/instructor/datavizI-ex.html
+
+
+
+
+

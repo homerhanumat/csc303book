@@ -1,0 +1,222 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CSC 303 Notes",
+    "section": "",
+    "text": "Preface\nThese are notes for CSC 303 at Georgetown College. Most of them are keyed somewhat to:",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#preface",
+    "href": "index.html#preface",
+    "title": "CSC 303 Notes",
+    "section": "",
+    "text": "Modern data science with R, 2nd Edition",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "02-visualization-basics.html",
+    "href": "02-visualization-basics.html",
+    "title": "1  Data Visualization",
+    "section": "",
+    "text": "1.1 A Taxonomy for Data Graphics\nA taxonomy is a scheme of classification.\nWe’ll introduce a taxonomy that helps you understand and critique data visualizations.\nThe four basic elements of our taxonomy of graphics are as follows:\nVisual cues are graphical elements that draw the viewer’s eye to what you him/her to focus on.\nThe coordinate system determines how data points are organized visually.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "02-visualization-basics.html#a-taxonomy-for-data-graphics",
+    "href": "02-visualization-basics.html#a-taxonomy-for-data-graphics",
+    "title": "1  Data Visualization",
+    "section": "",
+    "text": "visual cues\ncoordinate system\nscale\ncontext\n\n\n\nposition (numerical)\nlength (numerical)\nangle (numerical)\ndirection (numerical)\nshape (categorical)\narea (numerical)\nvolume (numerical)\nshade (either)\ncolor (either)\n\n\n\nCartesian (familiar x-y plane)\npolar (items identified by angle and distance from origin point)\ngeographic (locations on the earth in 2d representation)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "02-visualization-basics.html#introductory-examples",
+    "href": "02-visualization-basics.html#introductory-examples",
+    "title": "1  Data Visualization",
+    "section": "1.2 Introductory Examples",
+    "text": "1.2 Introductory Examples\nAn example:\n\n\n\n\n\nScatterplot of fastest driving speed and GPA. Points are colored by sex of the student.\n\n\n\n\nAnother example:\n\n\n\n\n\nClassroom seating preferences of 71 Georgetown students.\n\n\n\n\nAnother example:\n\n\n\n\n\nChoropleth map of state populations in the U.S.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "02-visualization-basics.html#scales-and-context",
+    "href": "02-visualization-basics.html#scales-and-context",
+    "title": "1  Data Visualization",
+    "section": "1.3 Scales and Context",
+    "text": "1.3 Scales and Context\n\n1.3.1 Scales\nScales translate data values into visual cues.\n\nCommon scales for numerical variables:\n\nlinear\nlogarithmic\npercentage\n\nCommon scales for categorical variables:\n\nno ordering (e.g., Democrat, Republican, Independent)\nordinal (e.g., hate sports, don’t care, love sports)\n\nThe variable time can be scaled in many ways\n\n\n\n1.3.2 Context\nPurpose:\n\nexplain purpose and major points of the graph\nhelp reader translate back from visual cues to data values\n\nExamples:\n\ntitle\nsubtitle\ncaption\naxis labels\ntick marks, grid lines\nlegends\n\nAn example:\n\n\n\n\n\n100-meter freestyle world records times from 1905 to 2004.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "02-visualization-basics.html#other-considerations",
+    "href": "02-visualization-basics.html#other-considerations",
+    "title": "1  Data Visualization",
+    "section": "1.4 Other Considerations",
+    "text": "1.4 Other Considerations\n\n1.4.1 Squeezing in the Data\nSome devices for fitting a lot of data into two dimensions:\n\nmultiples (facets)\nlayering\nanimation\n\n\n\n1.4.2 Multiples\nThis is known as facetting.\n\nBreak down the data by one or more variables.\nMake a different plot for each combination of the chosen variable(s).\n\nAn example:\n\n\n\n\n\nDaily traffic on a foot trail, facetted by season. Each point is a day of the year.\n\n\n\n\n\n\n1.4.3 Layering\nUsually this involves representing the data values in more than one way.\nAn example:\n\n\n\n\n\nViolin and jitter-plot of the fastest speed ever driven, by seating preference.\n\n\n\n\n\n\n1.4.4 More Complex Graphs\nWe’ll try a few here:\nhttp://mdsr-book.github.io/instructor/datavizI-ex.html",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html",
+    "href": "03-grammar-graphics.html",
+    "title": "2  Grammar of Graphics",
+    "section": "",
+    "text": "2.1 The Grammar of Graphics\nFor this Chapter we need:\nNew names for graph concepts:\nggplot2 is a graphics system that tries to implement the grammar of graphics faithfully.\nIt’s a good idea eventually to study the online documentation for ggplot2:",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#the-grammar-of-graphics",
+    "href": "03-grammar-graphics.html#the-grammar-of-graphics",
+    "title": "2  Grammar of Graphics",
+    "section": "",
+    "text": "frame\nglyphs\naesthetics\nscales\nguides\n\n\n\nIt’s hard to succinctly describe how ggplot2 works because it embodies a deep philosophy of visualisation.\n\n\n—Hadley Wickham (creator of ggplot2)\n\n\n\nhttp://ggplot2.tidyverse.org/index.html",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#the-frame",
+    "href": "03-grammar-graphics.html#the-frame",
+    "title": "2  Grammar of Graphics",
+    "section": "2.2 The Frame",
+    "text": "2.2 The Frame\nThe frame is the relationship between position and the data being plotted.\nThe frame corresponds to the visual cues of location.\n\nThe frame provides the space in which we will draw glyphs.\nThe frame determines what positions means.\nWe work with 2D-graphs, so often we specify the frame with two variables.\nBut often we need only one variable. (R will know what to do with the other dimension.)\n\nIn general, you set up the frame like this:\n\nggplot(\n  data = yourData,\n  mapping = aes(\n    x = xVariable,\n    y = yVariable\n  )\n)\n\nExample (try it)!\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nNo data showing yet!\n\n\n\n\n\n\nNote\n\n\n\nUsually we don’t name the arguments:\n\nggplot(m111survey, aes(x = fastest, y = GPA))\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nWe can also use the pipe-operator %&gt;%:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#glyphs",
+    "href": "03-grammar-graphics.html#glyphs",
+    "title": "2  Grammar of Graphics",
+    "section": "2.3 Glyphs",
+    "text": "2.3 Glyphs\nA glyph is the basic graphical unit that corresponds to a case in the data table.\n\nYou can see glyphs.\nEach glyph is formed from at least one case.\nThe location of each glyph is determined by the variable(s) that defined the frame.\n\nIn the m111survey graph, let’s represent each student (case) with a point.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nThe points are the glyphs.\n\nThis time each glyph goes with one exactly one case.\nThe x-coordinate is determined by the value of fastest for the case.\nThe y-coordinate is determined by the value of GPA for the case.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#aesthetics",
+    "href": "03-grammar-graphics.html#aesthetics",
+    "title": "2  Grammar of Graphics",
+    "section": "2.4 Aesthetics",
+    "text": "2.4 Aesthetics\nAn aesthetic is a perceptible property of a glyph that varies from case to case.\n(“aesthetic” and “visual cue” mean about the same thing.)\nWe already know two aesthetics:\n\nlocation in the x-direction\nlocation in the y-direction\n\nSome other possible aesthetics are:\n\nsize\ncolor\nshape\n\nLet’s use the color of each point to indicate the sex of the student.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nWe are mapping the aesthetic color to the variable sex.\nLet’s also map the aesthetic “size” to the variable height.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nYuck!",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#scales-and-guides",
+    "href": "03-grammar-graphics.html#scales-and-guides",
+    "title": "2  Grammar of Graphics",
+    "section": "2.5 Scales and Guides",
+    "text": "2.5 Scales and Guides\nA scale is the relationship between the value of a variable and the graphical attribute to be displayed for that value.\nExample: we mapped color to sex. R chose to set the value “female” to a reddish color, and the value “male” to a turquoise-blue color. That choice was the choice of a scale. (You can make R use a different scale if you like.)\nEvery aesthetic mapping involves a scale. R has default scales ready to use, if you don’t choose your own.\n\n2.5.1 Example: Color Scale\nLet’s specify our own color-scale:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nThis scale maps:\n\n“female” to pink\n“male” to red\n\n\n\n2.5.2 Example: Log Scale\nLet’s learn about CIACountries in the package mdsr:\n\nCIACountries %&gt;% \n  DT::datatable(options = list(scrollX = TRUE))\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nWhen you are working in R Studio, use:\n\nlibrary(mdsr)\nhelp(\"CIACountries\")\nView(CIACountries)\n\n\n\nPlot Gross Domestic Product against educational level:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nMany countries “crammed together” near the bottom.\nThe solution is to use a log-scale for the y-axis:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#guides",
+    "href": "03-grammar-graphics.html#guides",
+    "title": "2  Grammar of Graphics",
+    "section": "2.6 Guides",
+    "text": "2.6 Guides\nA guide is an indication, for the human viewer, of the scale being used in an aesthetic mapping.\nGuides are part of the context. A guide takes you backwards: from the perceptual property to the data value it represents.\nExamples of guides:\n\nLabels and tick-marks along the x-axis show you the scale for the x location aesthetic.\nLabels and tick-marks along the y-axis show you the scale for the y location aesthetic (if one is defined).\nLegends show guides for aesthetics such as color, size and shape.\n\nLet’s put in some more guides for our graph:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\n\nImportant\n\n\n\nBuilding a Graph in ggplot2:\n\nDescribe the frame\n\nggplot(aes(x = xvar, y = yvar))\n\nChoose a glyph style\n\ngeom_glyphType()\n\nMap glyph properties to variables\n\ngeom_glyphType(aes(prop1 = var1, prop2 = var2, ...))\n\nAdd context/guides\n\nlabs(x, y, title, subtitle)\n\n\nTo layer, repeat steps 2 and 3 above for new glyphs.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#layering",
+    "href": "03-grammar-graphics.html#layering",
+    "title": "2  Grammar of Graphics",
+    "section": "2.7 Layering",
+    "text": "2.7 Layering\nTo add a layer, add a glyph-type. Example: add a smoother to our plot:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nHere we add a regression line instead of a curve:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#facets",
+    "href": "03-grammar-graphics.html#facets",
+    "title": "2  Grammar of Graphics",
+    "section": "2.8 Facets",
+    "text": "2.8 Facets\nBack to the CIACountries data. Instead of mapping color to net_users, we could facet by net_users:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nHow do we get rid of that empty NA plot? Here’s how:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#aesthetics-vs.-fixed-properties",
+    "href": "03-grammar-graphics.html#aesthetics-vs.-fixed-properties",
+    "title": "2  Grammar of Graphics",
+    "section": "2.9 Aesthetics vs. Fixed Properties",
+    "text": "2.9 Aesthetics vs. Fixed Properties\nBelow, size of the points is mapped to height:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nBut we can also make size a “fixed property”:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nNote that size is set outside of the call to aes().\nHere, color is a fixed property:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nNote that color is set outside of the call to aes().",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#univariate-displays",
+    "href": "03-grammar-graphics.html#univariate-displays",
+    "title": "2  Grammar of Graphics",
+    "section": "2.10 Univariate Displays",
+    "text": "2.10 Univariate Displays\nLearn about the Current Population Survey, 1985.\n\nlibrary(mosaicData)\n?CPS85\nView(CPS85)\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n2.10.1 Histograms\nHistograms are seful for a numerical variable:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n2.10.2 Density Plots\nDensity plots are also useful for a numerical variable:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nThere is an outlier:\n\nCPSBig &lt;-\n  CPS85 %&gt;% \n  filter(wage &gt; 35)\nCPSBig\n\n  wage educ race sex hispanic south married exper union age sector\n1 44.5   14    W   F       NH    NS  Single     1   Not  21  manag\n\n\nLet’s remove it:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\nCPSSmall &lt;-\n  CPS85 %&gt;% \n  filter(wage &lt;= 35)\n\n\n\n2.10.3 Bar Graphs\nThese are good for tallies of a categorical variable:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#bar-graphs-arbitrary-y-axis",
+    "href": "03-grammar-graphics.html#bar-graphs-arbitrary-y-axis",
+    "title": "2  Grammar of Graphics",
+    "section": "2.11 Bar Graphs: Arbitrary Y-Axis",
+    "text": "2.11 Bar Graphs: Arbitrary Y-Axis\n\n?SAT_2010\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nMean Math SAT score for ten randomly selected states:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nYou can order the states by their mean SAT scores:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nLet’s pretty this up a bit:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#multivariate-displays",
+    "href": "03-grammar-graphics.html#multivariate-displays",
+    "title": "2  Grammar of Graphics",
+    "section": "2.12 Multivariate Displays",
+    "text": "2.12 Multivariate Displays\n\n2.12.1 Violin Plots\nUseful for displaying relationship between a numerical and a categorical variable.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nLet’s layer by adding a jitter-plot:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n2.12.2 Boxplots\nAlso useful for displaying relationship between a numerical and a categorical variable.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n2.12.3 What Box-Plots Tell Us\nIn a list of values:\n\nthe first quartile \\(Q_1\\) is a number that has about 25% of the values less than it\nthe third quartile \\(Q_3\\) is a number that has about 75% of the values less than it\n\\(Q_1 - Q_3\\) is called the interquartile range (IQR).\nthe median is a number that has about 50% of the data below it\n\n\\(Q_3 - Q_1\\) is called the interquartile range (IQR).\nFor Each Sector in CPSSmall, we can find the five-number summary:\n\nmosaic::favstats(wage ~ sector, data = CPSSmall)[1:6]\n\n    sector  min     Q1 median      Q3   max\n1 clerical 3.00 5.2000  7.500  9.5000 15.03\n2    const 3.75 7.2250  9.750 11.6275 15.00\n3    manag 1.00 7.1250 10.620 15.8550 26.29\n4    manuf 3.00 4.9250  6.750  9.8725 22.20\n5    other 2.85 5.0000  6.940 10.8150 26.00\n6     prof 4.35 7.5000 10.610 15.3800 24.98\n7    sales 3.35 4.3125  5.725 10.8325 19.98\n8  service 1.75 3.9650  5.500  8.0000 25.00\n\n\n\n2.12.3.1 Boxplot, No Outliers\nWhen there are no outliers:\n\nlower whisker goes from minimum value to \\(Q_1\\) (extends along lowest 25% of the values)\nbox from \\(Q_1\\) to \\(Q_3\\) shows middle 50% of the values\nthe median is the line inside the box\nupper whisker goes from \\(Q_3\\) to the maximum value (extends along highest 25% of the values)\n\n\n\n2.12.3.2 Boxplot, With Outliers\n\nIf a value is bigger than \\(Q_3 + 1.5 \\times IQR\\) then it is plotted individually as an outlier.\nThen the upper whisker goes from \\(Q_3\\) to the highest value that is not an outlier.\nIf a value is less than \\(Q_1 - 1.5 \\times IQR\\) then it is plotted individually as an outlier.\nThen the lower whisker goes from \\(Q_1\\) to the lowest value that is not an outlier.\n\n\n\n\n\n\nIllustration of a simple box plot.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#more-variables-facets",
+    "href": "03-grammar-graphics.html#more-variables-facets",
+    "title": "2  Grammar of Graphics",
+    "section": "2.13 More Variables: Facets",
+    "text": "2.13 More Variables: Facets\nYou can incorporate additional variables by facetting.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nOf course you can also incorporate additional variables by aesthetic mapping:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n2.13.1 Scatter Plots\nThese are useful for studying the relationship between two numerical variables.\nExample:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nThis seems wrong!\nLet’s consider a lurking variable:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nLet’s group the states by the percentage of their students that took the SAT:\n\nSATgr &lt;-\n  SAT_2010 %&gt;% \n    mutate(\n      SAT_rate = cut(\n        sat_pct,\n        breaks = c(0, 30, 60, 100),\n        abels = c(\"low\", \"medium\", \"high\")\n      )\n    )\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nNow let’s map color to the groups:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n2.13.2 Line Plots\nThese are also useful for studying the relationship between two numerical variables, especially when one of then is time.\nExample: world records in the 100-meter freestyle.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n2.13.3 Baby Names\nLearn about babynames in the babynames package:\n\nlibrary(babynames)\n?babynames\nView(babynames)\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nPopularity of my name over time (try yours, too!:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nLet’s study some unisex names:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nAnother way to investigate this:\n\naesthetic mapping for sex\nfacet for name only:\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "03-grammar-graphics.html#a-difficulty-numeric-groups",
+    "href": "03-grammar-graphics.html#a-difficulty-numeric-groups",
+    "title": "2  Grammar of Graphics",
+    "section": "2.14 A Difficulty: Numeric “Groups”",
+    "text": "2.14 A Difficulty: Numeric “Groups”\nLearn about the data table weather from the package nyclights13:\n\nlibrary(nycflights13)\nhelp(weather)\nView(weather)\n\nHere is our goal-plot:\n\n\n\n\n\n\n\n\n\nOur first try:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nThe diagnosis:\n\nmonth is a numeric variable!\nso ggplot2 does not know how to group the temperatures to make separate boxplots for each group!\n\nOne solution is to make a categorical variable out of month:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nAnother Solution is to introduce the group aesthetic:\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  }
+]

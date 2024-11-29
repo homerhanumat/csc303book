@@ -1,0 +1,845 @@
+---
+title: "Grammar of Graphics"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+filters: 
+  - webr
+webr:
+  repos: ["https://homerhanumat.r-universe.dev"]
+  packages: ["ggplot2", "bcscr", "mdsr", "babynames", "mosaicData", "nycflights13", "dplyr", "mosaic"]
+  warning: false
+---
+
+```{r setup, include=FALSE}
+library(mdsr)   # Load additional packages here
+library(tidyverse)
+library(mosaicData)
+library(bcscr)
+library(nycflights13)
+knitr::opts_chunk$set(
+  tidy=FALSE,     # display code as typed
+  size="small",   # slightly smaller font for code
+  fig.align = "center",  # center graphs on page
+  warning = FALSE, message = FALSE,  # suppress messages from ggplot2
+  cache = FALSE   # save time re-knitting
+  )     
+```
+
+```{r echo = FALSE, fig.align="center", out.width="90%", fig.cap="We are working on the Visualize phase."}
+knitr::include_graphics("images/data_flow.png")
+```
+
+For this Chapter we need:
+
+```{r eval=FALSE}
+library(mdsr)
+library(tidyverse)
+library(mosaicData)
+library(bcscr)
+library(nycflights13)
+```
+
+
+
+## The Grammar of Graphics
+
+New names for graph concepts:
+
+* frame
+* glyphs
+* aesthetics
+* scales
+* guides
+
+**ggplot2** is a graphics system that tries to implement the grammar of graphics faithfully.
+
+>*It’s hard to succinctly describe how **ggplot2** works because it embodies a deep philosophy of visualisation.*
+
+>---Hadley Wickham (creator of **ggplot2**)
+
+It's a good idea eventually to study the online documentation for **ggplot2**:
+
+>[http://ggplot2.tidyverse.org/index.html](http://ggplot2.tidyverse.org/index.html)
+
+
+## The Frame
+
+
+The *frame* is the relationship between position and the data being plotted.
+
+The frame corresponds to the visual cues of location.
+
+* The frame provides the space in which we will draw *glyphs*.
+* The frame determines what positions means.
+* We work with 2D-graphs, so often we specify the frame with two variables.
+* But often we need only one variable.  (R will know what to do with the other dimension.)
+
+
+In general, you set up the frame like this:
+
+```{r eval = FALSE}
+ggplot(
+  data = yourData,
+  mapping = aes(
+    x = xVariable,
+    y = yVariable
+  )
+)
+```
+
+Example (try it)!
+
+```{webr-r}
+library(bcscr) # to get m111survey
+ggplot(
+  data = m111survey,
+  mapping = aes(
+    x = fastest,
+    y = GPA
+  )
+)
+```
+
+No data showing yet!
+
+
+::: {.callout-note}
+Usually we don't name the arguments:
+
+```{r eval = FALSE}
+ggplot(m111survey, aes(x = fastest, y = GPA))
+```
+:::
+
+::: {.callout-note}
+We can also use the pipe-operator `%>%`:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA))
+```
+:::
+
+## Glyphs
+
+A *glyph* is the basic graphical unit that corresponds to a case in the data table.
+
+* You can *see* glyphs.
+* Each glyph is formed from at least one case.
+* The location of each glyph is determined by the variable(s) that defined the frame.
+
+
+In the `m111survey` graph, let's represent each student (case) with a point.
+
+
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+  geom_point()
+```
+
+The points are the *glyphs*.
+
+* This time each glyph goes with one exactly one case.
+* The x-coordinate is determined by the value of `fastest` for the case.
+* The y-coordinate is determined by the value of `GPA` for the case.
+
+
+
+## Aesthetics
+
+An *aesthetic* is a perceptible property of a glyph that varies from case to case.
+
+("aesthetic" and "visual cue" mean about the same thing.)
+
+We already know two aesthetics:
+
+* location in the x-direction
+* location in the y-direction
+
+Some other possible aesthetics are:
+
+* size
+* color
+* shape
+
+Let's use the *color* of each point to indicate the sex of the student.
+
+
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+  geom_point(aes(color = sex))
+```
+
+We are *mapping* the aesthetic `color` to the variable `sex`.
+
+
+Let's also map the aesthetic "size" to the variable `height`.
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+  geom_point(aes(color = sex, size = height))
+```
+
+Yuck!
+
+## Scales and Guides
+
+
+A *scale* is the relationship between the value of a variable and the graphical attribute to be displayed for that value.
+
+Example:  we mapped color to `sex`.  R chose to set the value "female" to a reddish color, and the value "male" to a turquoise-blue color.  That choice was the choice of a *scale*.  (You can make R use a different scale if you like.)
+
+Every aesthetic mapping involves a scale.  R has default scales ready to use, if you don't choose your own.
+
+### Example:  Color Scale
+
+Let's specify our own color-scale:
+
+```{webr-r}
+m111survey %>% 
+ggplot(aes(x = fastest, y = GPA)) +
+  geom_point(aes(color = sex)) +
+  scale_color_manual(values = c("pink", "red"))
+```
+
+This scale maps:
+
+* "female" to pink
+* "male" to red
+
+### Example:  Log Scale
+
+Let's learn about [`CIACountries`](https://www.rdocumentation.org/packages/mdsr/versions/0.2.8/topics/CIACountries) in the package **mdsr**:
+
+```{r}
+CIACountries %>% 
+  DT::datatable(options = list(scrollX = TRUE))
+```
+
+::: {.callout-note}
+When you are working in R Studio, use:
+
+```{r eval = FALSE}
+library(mdsr)
+help("CIACountries")
+View(CIACountries)
+```
+:::
+
+
+
+Plot Gross Domestic Product against educational level:
+
+```{webr-r}
+CIACountries %>% 
+  ggplot(aes(x = educ, y = gdp)) +
+  geom_point(aes(color = net_users, size = roadways))
+```
+
+Many countries "crammed together" near the bottom.
+
+The solution is to use a log-scale for the y-axis:
+
+```{webr-r}
+CIACountries %>% 
+  ggplot(aes(x = educ, y = gdp)) +
+  geom_point(aes(color = net_users, size = roadways)) +
+  scale_y_continuous(trans = "log10")
+```
+
+
+## Guides
+
+
+A *guide* is an indication, for the human viewer, of the scale being used in an aesthetic mapping.
+
+Guides are part of the *context*.  A guide takes you backwards:  from the perceptual property to the data value it represents.
+
+Examples of guides:
+
+* Labels and tick-marks along the x-axis show you the scale for the *x* location aesthetic.
+* Labels and tick-marks along the y-axis show you the scale for the *y* location aesthetic (if one is defined).
+* Legends show guides for aesthetics such as color, size and shape.
+
+Let's put in some more guides for our graph:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+    geom_point(aes(color = sex)) +
+    labs(
+      x = "fastest speed ever driven (mph)",
+      y = "grade-point average",
+      title = "Not much relationship between speed and GPA",
+      subtitle = "(But guys tend to have lower GPA's!)"
+    )
+```
+
+
+::: {.callout-important}
+Building a Graph in **ggplot2**:
+
+1. Describe the frame
+    * `ggplot(aes(x = xvar, y = yvar))`
+2. Choose a glyph style
+    * `geom_glyphType()`
+3. Map glyph properties to variables
+    * `geom_glyphType(aes(prop1 = var1, prop2 = var2, ...))`
+4. Add context/guides
+    * labs(x, y, title, subtitle)
+
+To layer, repeat steps 2 and 3 above for new glyphs.
+:::
+
+## Layering
+
+
+To add a layer, add a glyph-type.  Example:  add a smoother to our plot:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+    geom_point(aes(color = sex)) +
+    geom_smooth(se = FALSE, aes(color = sex)) +
+    labs(
+      x = "fastest speed ever driven (mph)",
+      y = "grade-point average",
+      title = "Not much relationship between speed and GPA",
+      subtitle = "(But guys tend to have lower GPA's!)"
+    )
+```
+
+
+Here we add a regression line instead of a curve:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+    geom_point(aes(color = sex)) +
+    geom_smooth(method = "lm", se = FALSE, aes(color = sex)) +
+    labs(
+      x = "fastest speed ever driven (mph)",
+      y = "grade-point average",
+      title = "Not much relationship between speed and GPA",
+      subtitle = "(But guys tend to have lower GPA's!)"
+    )
+```
+
+
+## Facets
+
+Back to the `CIACountries` data.  Instead of mapping color to `net_users`, we could facet by `net_users`:
+
+```{webr-r}
+CIACountries %>% 
+  ggplot(aes(x = educ, y = gdp)) +
+    geom_point(aes(size = roadways)) +
+    scale_y_continuous(trans = "log10") +
+    facet_wrap(~ net_users, nrow = 1) +
+    theme(legend.position = "top")
+```
+
+
+
+How do we get rid of that empty `NA` plot?  Here's how:
+
+```{webr-r}
+CIACountries %>% 
+  filter(!is.na(net_users)) %>% 
+  ggplot(aes(x = educ, y = gdp)) +
+    geom_point(aes(size = roadways)) +
+    scale_y_continuous(trans = "log10") +
+    facet_wrap(~ net_users, nrow = 1) +
+    theme(legend.position = "top")
+```
+
+
+
+## Aesthetics vs. Fixed Properties
+
+Below, size of the points is mapped to `height`:
+
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+    geom_point(aes(color = sex, size = height))
+```
+
+
+
+But we can also make size a "fixed property":
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+    geom_point(aes(color = sex), size = 2)
+```
+
+Note that `size` is set *outside* of the call to `aes()`.
+
+
+
+Here, color is a fixed property:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = fastest, y = GPA)) +
+    geom_point(aes(size = height), color = "purple")
+```
+
+Note that `color` is set outside of the call to `aes()`.
+
+
+## Univariate Displays
+
+Learn about the Current Population Survey, 1985.
+
+```{r eval = FALSE}
+library(mosaicData)
+?CPS85
+View(CPS85)
+```
+
+```{webr-r}
+CPS85 %>% 
+  head(n = 10)
+```
+
+
+### Histograms
+
+Histograms are seful for a numerical variable:
+
+```{webr-r}
+CPS85 %>% 
+  ggplot(aes(x = wage)) +
+    geom_histogram(binwidth = 5, fill = "skyblue", color = "black")
+```
+
+### Density Plots
+
+Density plots are also useful for a numerical variable:
+
+
+```{webr-r}
+CPS85 %>% 
+  ggplot(aes(x = wage)) +
+    geom_density(fill = "burlywood")
+```
+
+There is an outlier:
+
+```{r}
+CPSBig <-
+  CPS85 %>% 
+  filter(wage > 35)
+CPSBig
+```
+
+Let's remove it:
+
+```{webr-r}
+#| context: setup
+CPSSmall <-
+  CPS85 %>% 
+  filter(wage <= 35)
+```
+
+```{r}
+CPSSmall <-
+  CPS85 %>% 
+  filter(wage <= 35)
+```
+
+
+
+
+### Bar Graphs
+
+These are good for tallies of a categorical variable:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = seat)) +
+    geom_bar(fill = "burlywood")
+```
+
+
+## Bar Graphs:  Arbitrary Y-Axis 
+
+```{r eval = FALSE}
+?SAT_2010
+```
+
+```{webr-r}
+SAT_2010 %>% head(n = 10)
+```
+
+
+Mean Math SAT score for ten randomly selected states:
+
+
+```{webr-r}
+ten <- SAT_2010 %>% sample_n(10)
+ggplot(ten, aes(x = state, y = math)) +
+  geom_bar(fill = "burlywood", stat = "identity")
+```
+
+
+You can order the states by their mean SAT scores:
+
+```{webr-r}
+ggplot(ten, aes(x = reorder(state, math), y = math)) +
+  geom_bar(fill = "burlywood", stat = "identity")
+```
+
+Let's pretty this up a bit:
+
+```{webr-r}
+ggplot(ten, aes(x = reorder(state, math), y = math)) +
+  geom_bar(fill = "burlywood", stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = NULL, y = "mean math subscore")
+```
+
+
+## Multivariate Displays
+
+### Violin Plots
+
+Useful for displaying relationship between a numerical and a categorical variable.
+
+
+```{webr-r}
+CPSSmall %>% 
+  ggplot(aes(x = sex, y = wage)) +
+    geom_violin(fill = "burlywood")
+```
+
+Let's layer by adding a jitter-plot:
+
+```{webr-r}
+CPSSmall %>% 
+  ggplot(aes(x = sex, y = wage)) +
+    geom_violin(fill = "burlywood") +
+    geom_jitter(width = 0.25, size = 0.3)
+```
+
+
+### Boxplots
+
+Also useful for displaying relationship between a numerical and a categorical variable.
+
+```{webr-r}
+CPSSmall %>% 
+  ggplot(aes(x = sector, y = wage)) +
+    geom_boxplot(fill = "burlywood")
+```
+
+### What Box-Plots Tell Us
+
+In a list of values:
+
+* the *first quartile* $Q_1$ is a number that has about 25% of the values less than it
+* the *third quartile* $Q_3$ is a number that has about 75% of the values less than it
+* $Q_1 - Q_3$ is called the *interquartile range* (IQR).
+* the *median* is a number that has about 50% of the data below it
+
+$Q_3 - Q_1$ is called the *interquartile range* (IQR).
+
+For Each Sector in CPSSmall, we can find the five-number summary:
+
+```{r}
+mosaic::favstats(wage ~ sector, data = CPSSmall)[1:6]
+```
+
+#### Boxplot, No Outliers
+
+When there are no outliers:
+
+* lower whisker goes from minimum value to $Q_1$ (extends along lowest 25% of the values)
+* box from $Q_1$ to $Q_3$ shows middle 50% of the values
+* the median is the line inside the box
+* upper whisker goes from $Q_3$ to the maximum value (extends along highest 25% of the values)
+
+#### Boxplot, With Outliers
+
+* If a value is bigger than $Q_3 + 1.5 \times IQR$ then it is plotted individually as an outlier.
+* Then the upper whisker goes from $Q_3$ to the highest value that is not an outlier.
+* If a value is less than $Q_1 - 1.5 \times IQR$ then it is plotted individually as an outlier.
+* Then the lower whisker goes from $Q_1$ to the lowest value that is not an outlier.
+
+
+
+```{r ggboxplotsample, echo=FALSE, fig.cap="Illustration of a simple box plot."}
+fn <- fivenum(m111survey$fastest)
+iqr <- fn[4] - fn[2]
+ggplot(m111survey, aes(group = 1, x = factor(1), y = fastest)) +
+  geom_boxplot(fill = "burlywood", width = 0.3) +
+  annotate("text", label = "Q1 -->", x = 0.8, y = fn[2], size = 5) +
+  annotate("text", label = "median -->", x = 0.765, y = fn[3], size = 5) +
+  annotate("text", label = "Q3 -->", x = 0.8, y = fn[4], size = 5) +
+  annotate("text", label = "Q3 + 1.5 * IQR -->", x = 0.85,
+           y = fn[4] + 1.5*iqr - 3, size = 5) +
+  annotate("text", label = "outlier -->", x = 0.91, y = fn[5], size = 5) +
+  annotate("text", label = "min -->", x = 0.93, y = fn[1], size = 5)  +
+  labs(y = "fastest speed driven (mph)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+```
+
+
+
+
+## More Variables:  Facets
+
+You can incorporate additional variables by facetting.
+
+```{webr-r}
+CPSSmall %>% 
+  ggplot(aes(x = sex, y = wage)) +
+    geom_boxplot(fill = "burlywood") +
+    facet_wrap(~ sector, nrow = 2)
+```
+
+
+
+
+
+Of course you can also incorporate additional variables by aesthetic mapping:
+
+```{webr-r}
+m111survey %>% 
+  ggplot(aes(x = sex)) +
+    geom_bar(aes(fill = seat)) +
+    coord_flip()
+```
+
+
+
+### Scatter Plots
+
+These are useful for studying the relationship between two numerical variables.
+
+Example:
+
+```{webr-r}
+SAT_2010 %>% 
+  ggplot(aes(x = expenditure, y = math)) +
+  geom_point() +
+  labs(x = "Average expenditure per student ($1000)",
+       y = "Average score on Math ACT")
+```
+
+This seems wrong!
+
+Let's consider a *lurking variable*:
+
+```{webr-r}
+SAT_2010 %>% 
+  ggplot(aes(x = expenditure, y = math)) +
+  geom_point(aes(color = sat_pct)) +
+  labs(x = "Average expenditure per student ($1000)",
+       y = "Average score on Math ACT")
+```
+
+
+Let's group the states by the percentage of their students that took the SAT:
+
+```{r eval = FALSE}
+SATgr <-
+  SAT_2010 %>% 
+    mutate(
+      SAT_rate = cut(
+        sat_pct,
+        breaks = c(0, 30, 60, 100),
+        abels = c("low", "medium", "high")
+      )
+    )
+```
+
+```{webr-r}
+#| context: setup
+SATgr <-
+  SAT_2010 %>% 
+    mutate(
+      SAT_rate = cut(
+        sat_pct,
+        breaks = c(0, 30, 60, 100),
+        abels = c("low", "medium", "high")
+      )
+    )
+```
+
+```{webr-r}
+SATgr %>% head(n = 10)
+```
+
+Now let's map color to the groups:
+
+
+```{webr-r}
+ggplot(SATgr, aes(x = expenditure, y = math)) +
+     geom_point(aes(color = SAT_rate)) +
+     geom_smooth(method = "lm", se = FALSE, aes(color = SAT_rate)) +
+     labs(
+      x = "Average expenditure per student ($1000)",
+      y = "Average score on Math ACT"
+    )
+```
+
+
+### Line Plots
+
+These are also useful for studying the relationship between two numerical variables, especially when one of then is *time*.
+
+Example:  world records in the 100-meter freestyle.
+
+```{webr-r}
+ggplot(SwimRecords, aes(x = year, y = time)) +
+  geom_line(aes(color = sex)) +
+  geom_point(aes(shape = sex)) +
+  labs(x = "Year", y = "time (seconds)")
+```
+
+### Baby Names
+
+Learn about `babynames` in the **babynames** package:
+
+```{r eval = FALSE}
+library(babynames)
+?babynames
+View(babynames)
+```
+
+```{webr-r}
+babynames %>% head(n = 8)
+```
+
+
+Popularity of my name over time (try yours, too!:
+
+```{webr-r}
+babynames %>% 
+  filter(sex == "M" & name == "Homer") %>% 
+  ggplot(aes(x = year, y = prop)) +
+  geom_line() +
+  labs(x = NULL, y = "proportion born with name")
+```
+
+
+Let's study some unisex names:
+
+```{webr-r}
+unisex <- c("Jessie", "Marion", "Jackie")
+babynames %>% 
+  filter(name %in% unisex) %>% 
+  ggplot(aes(x = year, y = n)) +
+    geom_line() +
+    labs(x = NULL, y = "number born with name") +
+    facet_grid(name ~ sex)
+```
+
+
+
+
+
+Another way to investigate this:
+
+* aesthetic mapping for `sex`
+* facet for `name` only:
+
+```{webr-r}
+unisex <- c("Jessie", "Marion", "Jackie")
+babynames %>% 
+  filter(name %in% unisex) %>% 
+  ggplot(aes(x = year, y = n)) +
+    geom_line(aes(color = sex)) +
+    labs(x = NULL, y = "number born with name") +
+    facet_wrap(~ name, nrow = 3)
+```
+
+
+
+## A Difficulty:  Numeric "Groups"
+
+
+Learn about the data table `weather` from the package **nyclights13**:
+
+```{r eval = FALSE}
+library(nycflights13)
+help(weather)
+View(weather)
+```
+
+Here is our goal-plot:
+
+```{r echo = FALSE}
+weather %>% 
+  ggplot(aes(x = month, y = temp, group = month)) +
+  geom_boxplot() +
+  labs(
+    x = "month of the year",
+    y = "temperature (degrees F)"
+  )
+```
+
+Our first try:
+
+```{webr-r}
+weather %>% 
+  ggplot(aes(x = month, y = temp)) +
+  geom_boxplot() +
+  labs(
+    x = "month of the year",
+    y = "temperature (degrees F)"
+  )
+```
+
+
+The diagnosis:
+
+* `month` is a numeric variable!
+* so ggplot2 does not know how to group the temperatures to make separate boxplots for each group!
+
+One solution is to make a categorical variable out of `month`:
+
+```{webr-r}
+weather %>% 
+  ggplot(aes(x = factor(month), y = temp)) +
+  geom_boxplot() +
+  labs(
+    x = "month of the year",
+    y = "temperature (degrees F)"
+  )
+```
+
+
+
+Another Solution is to introduce the `group` aesthetic:
+
+```{webr-r}
+weather %>% 
+  ggplot(aes(x = month, y = temp, group = month)) +
+  geom_boxplot() +
+  labs(
+    x = "month of the year",
+    y = "temperature (degrees F)"
+  )
+```
+
+
+
+
+
+
+

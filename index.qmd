@@ -1,0 +1,7 @@
+## Preface {.unnumbered}
+
+These are notes for CSC 303 at Georgetown College.  Most of them are keyed somewhat to:
+
+>[Modern data science with R, 2nd Edition](https://mdsr-book.github.io/mdsr2e/)
+
+
